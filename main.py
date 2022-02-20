@@ -32,10 +32,15 @@ def calc_gravity(m1, m2, r):
 def update_physics(objects):
     pass
     
-# calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
+calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
 
 objects.append(Object(100, 100, 100, 100, 10, (255, 0, 0)))
 objects.append(Object(300, 100, 100, 100, 20, (0, 255, 0)))
+
+offset_x = (objects[0].x - objects[1].x) / 100
+print(offset_x)
+
+calc_gravity(m1 = objects[0].mass , m2 = objects[1].mass, r =  offset_x)
 
 while run:  
     clock.tick(FPS)
