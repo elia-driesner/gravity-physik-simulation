@@ -5,7 +5,7 @@ import os
 pygame.init()
 os.system('clear')
 
-wn_size = [1000, 700]
+wn_size = [1400, 700]
 wn = pygame.display.set_mode(wn_size)
 pygame.display.set_caption('gravity physic simulation')
 
@@ -39,15 +39,15 @@ def calc_gravity(m1, m2, r, o1, o2):
     
     if o2_x < o1_x:
         o2.x += (a * 0.3) * 100
+        print(a)
     else: 
         o2.x -= (a * 0.3) * 100
         
-    print(a)
     
 # calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
 
-objects.append(Object(0, 100, 100, 100, 5.972 * 10e24, (255, 0, 0)))
-objects.append(Object(900, 100, 100, 100, 60, (0, 255, 0)))
+objects.append(Object(900, 100, 100, 100, 5.972 * 10e24, (255, 0, 0)))
+objects.append(Object(0, 100, 100, 100, 60, (0, 255, 0)))
 
 while run:  
     clock.tick(FPS)
