@@ -5,7 +5,7 @@ import os
 pygame.init()
 os.system('clear')
 
-wn_size = [700, 700]
+wn_size = [1000, 700]
 wn = pygame.display.set_mode(wn_size)
 pygame.display.set_caption('gravity physic simulation')
 
@@ -13,6 +13,8 @@ clock = pygame.time.Clock()
 FPS = 60
 
 run = True
+
+pixel_meter = 2900000
 
 objects = []
 
@@ -25,22 +27,27 @@ class Object:
         self.color = color
         
         
-def calc_gravity(m1, m2, r):
-    F = ((6.67428 * 10e-11) * m1 * m2) / (r * r) # Calculate Gravity and Output Fg = N
-    print(f'{F} Newton')
+def calc_gravity(m1, m2, r, o1, o2):
+    r = r * 1
+    F = ((6.67428 * 10e-11) * m1 * m2) / (r * r)
+    a = math.sqrt(F / m2)
+    # print(f'{F} Newton')
+    # print(f'{a} p / s')
     
-def update_physics(objects):
-    pass
+    o1_x = o1.x + (o1.width / 2)
+    o2_x = o2.x + (o2.width / 2)
     
-calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
+    if o2_x < o1_x:
+        o2.x += (a * 0.3) * 100
+    else: 
+        o2.x -= (a * 0.3) * 100
+        
+    print(a)
+    
+# calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
 
-objects.append(Object(100, 100, 100, 100, 10, (255, 0, 0)))
-objects.append(Object(300, 100, 100, 100, 20, (0, 255, 0)))
-
-offset_x = (objects[0].x - objects[1].x) / 100
-print(offset_x)
-
-calc_gravity(m1 = objects[0].mass , m2 = objects[1].mass, r =  offset_x)
+objects.append(Object(0, 100, 100, 100, 5.972 * 10e24, (255, 0, 0)))
+objects.append(Object(900, 100, 100, 100, 60, (0, 255, 0)))
 
 while run:  
     clock.tick(FPS)
@@ -50,6 +57,7 @@ while run:
         pygame.draw.rect(wn, element.color, [element.x, element.y, element.width, element.height], 0)
     pygame.display.update()
     
+    calc_gravity(m1 = objects[0].mass , m2 = objects[1].mass, r =  pixel_meter * (objects[0].x - objects[1].x), o1 = objects[0], o2 = objects[1])
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
