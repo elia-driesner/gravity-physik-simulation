@@ -28,11 +28,8 @@ class Object:
         
         
 def calc_gravity(m1, m2, r, o1, o2):
-    r = r * 1
     F = ((6.67428 * 10e-11) * m1 * m2) / (r * r)
     a = math.sqrt(F / m2)
-    # print(f'{F} Newton')
-    # print(f'{a} p / s')
     
     o1_x = o1.x + (o1.width / 2)
     o2_x = o2.x + (o2.width / 2)
