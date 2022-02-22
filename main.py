@@ -14,7 +14,7 @@ FPS = 60
 
 run = True
 
-pixel_meter = 1
+pixel_meter = 10
 
 objects = []
 
@@ -26,6 +26,9 @@ class Object:
         self.x, self.y = x, y
         self.color = color
         
+        self.start_x = x
+        self.start_y = y
+        
         
 def calc_gravity(m1, m2, r, o1, o2):
     F = ((6.67428 * 10e-11) * m1 * m2) / (r * r)
@@ -36,18 +39,24 @@ def calc_gravity(m1, m2, r, o1, o2):
     o1_x = o1.x + (o1.width / 2)
     o2_x = o2.x + (o2.width / 2)
     
+    # if o2_x < o1_x:
+    #     o2.x += (o2.start_x + s) * pixel_meter
+    # else: 
+    #     o2.x += (o2.start_x + s) * pixel_meter
+    
     if o2_x < o1_x:
-        o2.x += s * pixel_meter
+        o2.x += (s) * pixel_meter
     else: 
-        o2.x -= s * pixel_meter
+        o2.x += (s) * pixel_meter
         
-    print(o2.x)
+    print(s)
         
     
 # calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
 
 objects.append(Object(900, 100, 100, 100, 10000000000000000000, (0, 0, 255)))
-objects.append(Object(0, 250, 100, 100, 60, (0, 255, 0)))
+
+objects.append(Object(0, 250, 100, 100, 1, (0, 255, 0)))
 
 while run:  
     clock.tick(FPS)
