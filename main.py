@@ -14,7 +14,7 @@ FPS = 60
 
 run = True
 
-pixel_meter = 2900000
+pixel_meter = 1
 
 objects = []
 
@@ -29,29 +29,35 @@ class Object:
         
 def calc_gravity(m1, m2, r, o1, o2):
     F = ((6.67428 * 10e-11) * m1 * m2) / (r * r)
-    a = math.sqrt(F / m2)
+    a = F / m2
+    t = 0.0166666667
+    s = (F / m2) * t * t
     
     o1_x = o1.x + (o1.width / 2)
     o2_x = o2.x + (o2.width / 2)
     
     if o2_x < o1_x:
-        o2.x += (a * 0.3) * 100
-        print(a)
+        o2.x += s * pixel_meter
     else: 
-        o2.x -= (a * 0.3) * 100
+        o2.x -= s * pixel_meter
+        
+    print(o2.x)
         
     
 # calc_gravity(m1 = 5.972 * 10e24 , m2 = 60, r =  6.38 * 10e6)
 
-objects.append(Object(900, 100, 100, 100, 5.972 * 10e24, (255, 0, 0)))
-objects.append(Object(0, 100, 100, 100, 60, (0, 255, 0)))
+objects.append(Object(900, 100, 100, 100, 10000000000000000000, (0, 0, 255)))
+objects.append(Object(0, 250, 100, 100, 60, (0, 255, 0)))
 
 while run:  
     clock.tick(FPS)
     
     wn.fill((0, 0, 0))
     for element in objects:
-        pygame.draw.rect(wn, element.color, [element.x, element.y, element.width, element.height], 0)
+        if element != objects[0]:
+            pygame.draw.rect(wn, element.color, [element.x, element.y, element.width, element.height], 0)
+        else:
+            pygame.draw.circle(wn, element.color, (element.x, wn_size[1] / 2 - element.height / 2), element.width / 2)
     pygame.display.update()
     
     calc_gravity(m1 = objects[0].mass , m2 = objects[1].mass, r =  pixel_meter * (objects[0].x - objects[1].x), o1 = objects[0], o2 = objects[1])
