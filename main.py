@@ -48,6 +48,8 @@ def calc_gravity(m1, m2, r, o1, o2, speed):
     distance = round((((o1.x) - (o2.x + (o2.width))) * (pixel_meter / 300)) / 1000, 2)
     velocity = round((s / t) * 3.6, 2)
     gravity = round(F, 2)
+    energy = F * s
+    print(energy)
     
     o1_x = o1.x
     o2_x = o2.x - (o2.width / 2)
@@ -57,10 +59,8 @@ def calc_gravity(m1, m2, r, o1, o2, speed):
     else: 
         o2.x += (s)
         
-        
     return [distance, velocity, gravity, speed]
     
-
 objects.append(Object(1100, (wn_size[1] / 2) - 300, 600, 600, 5.972 * 10e24, (0, 0, 255), pygame.image.load('Erth.png')))
 
 objects.append(Object(0, (wn_size[1] / 2) - 10, 40, 40, 60, (0, 255, 0), pygame.image.load('Meteor.png')))
